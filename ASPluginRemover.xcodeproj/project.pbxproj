@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		665567A518753EE7001AA826 /* HowTo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 665567A318753EE7001AA826 /* HowTo.gif */; };
+		665567A618753EE7001AA826 /* main_screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 665567A418753EE7001AA826 /* main_screenshot.png */; };
+		665567A818753EFF001AA826 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 665567A718753EFF001AA826 /* README.md */; };
 		6689F55F1874ED3E0018CD52 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6689F55E1874ED3E0018CD52 /* AppKit.framework */; };
 		6689F5611874ED3E0018CD52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6689F5601874ED3E0018CD52 /* Foundation.framework */; };
 		6689F5671874ED3E0018CD52 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6689F5651874ED3E0018CD52 /* InfoPlist.strings */; };
@@ -14,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		665567A318753EE7001AA826 /* HowTo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = HowTo.gif; sourceTree = "<group>"; };
+		665567A418753EE7001AA826 /* main_screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_screenshot.png; sourceTree = "<group>"; };
+		665567A718753EFF001AA826 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		6689F55B1874ED3E0018CD52 /* ASPluginRemover.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASPluginRemover.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		6689F55E1874ED3E0018CD52 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6689F5601874ED3E0018CD52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		665567A218753EE7001AA826 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				665567A318753EE7001AA826 /* HowTo.gif */,
+				665567A418753EE7001AA826 /* main_screenshot.png */,
+			);
+			path = Screenshots;
+			sourceTree = SOURCE_ROOT;
+		};
 		6689F5521874ED3E0018CD52 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +91,8 @@
 		6689F5631874ED3E0018CD52 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				665567A718753EFF001AA826 /* README.md */,
+				665567A218753EE7001AA826 /* Screenshots */,
 				6689F5641874ED3E0018CD52 /* ASPluginRemover-Info.plist */,
 				6689F5651874ED3E0018CD52 /* InfoPlist.strings */,
 				6689F56B1874ED3E0018CD52 /* ASPluginRemover-Prefix.pch */,
@@ -134,7 +151,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				665567A518753EE7001AA826 /* HowTo.gif in Resources */,
 				6689F5671874ED3E0018CD52 /* InfoPlist.strings in Resources */,
+				665567A818753EFF001AA826 /* README.md in Resources */,
+				665567A618753EE7001AA826 /* main_screenshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +300,7 @@
 				6689F5701874ED3E0018CD52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

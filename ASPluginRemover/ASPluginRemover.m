@@ -3,22 +3,15 @@
 //  ASPluginRemover
 //
 //  Created by Adam N. Smith on 1/1/14.
-//    Copyright (c) 2014 Magnus Development. All rights reserved.
+//  Copyright (c) 2014 Magnus Development. All rights reserved.
 //
 
 #import "ASPluginRemover.h"
 
-static ASPluginRemover *sharedPlugin;
-
-@interface ASPluginRemover()
-
-@property (nonatomic, strong) NSBundle *bundle;
-@end
-
 @implementation ASPluginRemover
 
-+ (void)pluginDidLoad:(NSBundle *)plugin
-{
++(void)pluginDidLoad:(NSBundle *)plugin{
+    
     static id sharedPlugin = nil;
     static dispatch_once_t onceToken;
     NSString *currentApplicationName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
@@ -26,39 +19,79 @@ static ASPluginRemover *sharedPlugin;
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
         });
-    }
-}
+    }//end if
+}//end method
 
-- (id)initWithBundle:(NSBundle *)plugin {
-{
+-(id)initWithBundle:(NSBundle *)plugin{
+    
     if (self = [super init]) {
-        // reference to plugin's bundle, for resource acccess
-        self.bundle = plugin;
+
+        NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Product"];
         
-        // Create menu items, initialize UI, etc.
-
-        // Sample Menu Item:
-        NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"File"];
         if (menuItem) {
+            
+            //setup main menu item
             [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-            NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
-            [actionMenuItem setTarget:self];
+            NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove Plugin" action:nil keyEquivalent:@""];
             [[menuItem submenu] addItem:actionMenuItem];
-        }
-    }
+            
+            //get list of plugin names
+            NSString *pluginsPath = @"~/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+            NSArray *pluginFilePaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[pluginsPath stringByStandardizingPath] error:nil];
+            
+            //remove plugin filename extension
+            NSMutableArray *pluginNames = [[NSMutableArray alloc] init];
+            for(NSString *fileName in pluginFilePaths)
+                [pluginNames addObject:[[fileName componentsSeparatedByString:@"."] objectAtIndex:0]];
+            
+            //create menu with plugin names
+            NSMenu *menuOfPlugins = [[NSMenu alloc] init];
+            for(NSString *pluginName in pluginNames){
+            
+                NSMenuItem *plugin = [[NSMenuItem alloc] initWithTitle:pluginName action:@selector(deletePluginWithName:) keyEquivalent:@""];
+                [plugin setTarget:self];
+                [menuOfPlugins addItem:plugin];
+                
+            }//end for
+            
+            actionMenuItem.submenu = menuOfPlugins;
+        }//end if
+        
+    }//end if
+    
     return self;
-}
+    
+}//end method
 
-// Sample Action, for menu item:
-- (void)doMenuAction
-{
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Hello, World" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-    [alert runModal];
-}
+-(void)deletePluginWithName:(NSMenuItem *)pluginMenuItem{
 
-- (void)dealloc
-{
+    //get path to plugin
+    NSString *pluginFilePath = [NSString stringWithFormat:@"~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/%@.xcplugin",pluginMenuItem.title];
+    
+    //remove plugin
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[pluginFilePath stringByStandardizingPath] error:&error];
+    
+    //display alert message
+    NSAlert *finishedAlert;
+    if(error == nil){
+    
+        finishedAlert = [NSAlert alertWithMessageText:@"Plugin Successfully Removed!" defaultButton:@"Ok" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Please restart Xcode for the changes to take effect."];
+        
+    }else{
+    
+        finishedAlert = [NSAlert alertWithMessageText:@"Error!" defaultButton:@"Ok" alternateButton:nil otherButton:nil informativeTextWithFormat:@"An error occurred while removing the plugin."];
+        
+    }//end if
+    
+    [finishedAlert runModal];
+    
+}//end method
+
+-(void)dealloc{
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+    
+}//end method
 
 @end
